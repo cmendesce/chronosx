@@ -68,7 +68,14 @@ $(function() {
        var tabela = $(".semana");
        var trs = tabela.find("tr");
        var colIndex = $(".semana").find("th:contains('"+date+"')").index();
-
+       var cargaHoraria = 8;
+       var dia = new Date().getDay();
+       if (dia === 1) {
+           cargaHoraria = 4.5;
+       } else if ([2, 3, 4].indexOf(dia) >= 0) {
+           cargaHoraria = 6.5;
+       }
+       
        var horaEntrada1 = trs.eq(2).find("td").eq(colIndex).text();
        var horaSaida1   = trs.eq(3).find("td").eq(colIndex).text();
        var horaEntrada2 = trs.eq(4).find("td").eq(colIndex).text();
@@ -81,7 +88,7 @@ $(function() {
            } else {
                var td = trs.eq(5).find("td").eq(colIndex);
 
-               var horaFinal = incrMin(horaEntrada2, 8 * 60 - diff(horaEntrada1, horaSaida1));
+               var horaFinal = incrMin(horaEntrada2, cargaHoraria * 60 - diff(horaEntrada1, horaSaida1));
 
                if (td.text() === '') {
                    td.html("<b style='color:blue'>" + horaFinal + "</b>");
